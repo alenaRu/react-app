@@ -1,0 +1,26 @@
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+
+    .inputs {
+        width: 70%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+        input{
+            color: #535353;
+        }
+        button {
+            width: 19%;
+            margin-bottom: 50px;
+        }
+    }
+    .contacts {
+        width: 70%;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,25 @@
+.profile {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+    img {
+        background: white;
+        border-radius: 70px;
+        margin: 50px;
+        max-width: 250px;
+        max-height: 250px;
+    } 
+    .contact-text {
+        text-align: center;
+        width: 100%;
+        align-self: stretch;
+    }
+    
+    button {
+        margin-top: 15vh;
+    }
+}

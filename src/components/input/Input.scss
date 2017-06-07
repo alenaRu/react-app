@@ -1,0 +1,16 @@
+input, textarea {
+    width: 50%;
+    align-self: center;
+    padding: 10px;
+    background-color: #2f2f2f;
+    border: none;
+    font-size: 1.3vw;
+    border-radius: 15px;
+    color: #757575;
+    text-align: center; 
+    margin: 0 50px 50px;
+    &:focus {
+        background-color: white;
+        outline-color: #1e1e1e;
+    }
+}

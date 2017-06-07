@@ -1,0 +1,11 @@
+.content {
+    background-color: #222;
+    flex: 1 0 auto;
+    color: #fff;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin: 8vh 0 4vh 0;
+    min-height: calc(100% - 120px);
+}
