@@ -1,71 +1,44 @@
-// Dependencies
-import React from 'react';
-
-//Data
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DATA from '../../MOCK_DATA.json';
-
-
-// Components
 import Header from '../header/Header.jsx';
 import Content from '../content/Content.jsx';
 import Footer from '../footer/Footer.jsx';
-
-// Styles
 import './App.scss';
 
-class App extends React.Component {
+const _tabs = {
+  profile: 0,
+  contacts: 1,
+  addContact: 2
+};
+
+class App extends Component {
+  static propTypes = {
+    initTab: PropTypes.number,
+    initProfile: PropTypes.number
+  }
+
   constructor(props) {
     super(props);
 
-    //Data
     this.data = DATA;
-
-    //Header
     this.tabList = ['Profile', 'Contact list', 'Add contact'];
-    this.tabClick = this.tabClick.bind(this);
-
-    //Content.ContactList    
-    this.contactClick = this.contactClick.bind(this);
-
-    this.goToProfileClick = this.goToProfileClick.bind(this);
-    this.goToListClick = this.goToListClick.bind(this);
-    this.goToAddClick = this.goToAddClick.bind(this);
 
     this.state = {
-      tabNumber: 2,
-      profileID: -1
+      tabNumber: props.initTab || -1,
+      profileID: props.initProfile || -1
     }
   }
 
-  tabClick(event) {
-    const selectedTabNum = this.tabList.indexOf(event.target.textContent);
-    this.setState({ tabNumber: selectedTabNum });
-  }
-
-  contactClick(event) {
-    const selectedContactID = event.currentTarget.id;
-    this.setState({ tabNumber: 0, profileID: selectedContactID });
-  }
-
-  goToProfileClick() {
-    this.setState({ tabNumber: 0 });
-  }
-
-  goToListClick() {
-    this.setState({ tabNumber: 1 });
-  }
-
-  goToAddClick() {
-    this.setState({ tabNumber: 2 });
-  }
-
   render() {
-    const currProfile = this.data[this.state.profileID - 1];
+    const { profileID, tabNumber } = this.state;
+
+    const currProfile = this.data[profileID - 1];
 
     return (
       <div className="site-wrapper">
         <Header
-          activeTab={this.state.tabNumber}
+          activeTab={tabNumber}
           tabList={this.tabList}
           tabClick={this.tabClick}
         />
@@ -73,20 +46,61 @@ class App extends React.Component {
         <Content
           data={this.data}
           profile={currProfile}
-          activeTab={this.state.tabNumber}      
+          activeTab={tabNumber}
 
           goToProfileClick={this.goToProfileClick}
           goToListClick={this.goToListClick}
           goToAddClick={this.goToAddClick}
-          contactClick={this.contactClick}
+          onContactClick={this.onContactClick}
         />
         <Footer
-          profileName={currProfile ? `${currProfile.first_name} ${currProfile.last_name}` : ""}
+          profileName={this._getProfileName(currProfile)}
           contactListLength={this.data.length} />
         }
       </div>
     )
   }
+
+  tabClick = (tabIndex) => {
+    this.setState({ tabNumber: tabIndex });
+  }
+
+  onContactClick = (contactID) => {
+    this.setState(
+      {
+        tabNumber: _tabs.profile,
+        profileID: contactID
+      });
+  }
+
+  goToProfileClick = () => {
+    this._changeTab(_tabs.profile);
+  }
+
+  goToListClick = () => {
+    this._changeTab(_tabs.contacts);
+  }
+
+  goToAddClick = () => {
+    this._changeTab(_tabs.addContact);
+  }
+
+  _changeTab = (tabId = 0) => {
+    this.setState({
+      tabNumber: tabId
+    });
+  };
+
+  _getProfileName = (profile) => {
+    let profileName = '-';
+
+    if (!profile) {
+      return profileName;
+    }
+
+    return `${profile.first_name} ${profile.last_name}`;
+  };
+
 }
 
 export default App;

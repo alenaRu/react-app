@@ -1,29 +1,36 @@
-// Dependencies
 import React from 'react';
-
-// Styles
+import PropTypes from 'prop-types';
 import './Contact.scss';
 
-// Components
+const _onClickWrapper = (index, onClick) => () => {
+    if (_.isFunction(onClick)) {
+        onClick(index);
+    }
+};
 
-class Contact extends React.Component {
-  constructor(props) {
-    super(props);
+const Contact = ({ contact, onContactClick }) => {
+  if (!contact) {
+    return <div></div>;
   }
   
-  render() {
-    return (
-      <div className="contact" id={this.props.id} onClick={this.props.contactClick}>
-        <img src={this.props.img} />
+  const { id, image, first_name, last_name, phone} = contact;
+  return (
+    <div className="contact" id={id} onClick={_onClickWrapper(id, onContactClick)}>
+      <img src={image} />
 
-        <div className="contact-data" >
-          <h6> {this.props.name} </h6>
-          <p> {this.props.num} </p>
-        </div>
-
+      <div className="contact-data" >
+        <h6> {`${first_name} ${last_name}`} </h6>
+        <p> {phone} </p>
       </div>
-    );
-  }
+
+    </div>
+  );
+
 }
+
+Contact.propTypes = {
+    contact: PropTypes.object,
+    onContactClick: PropTypes.func
+};
 
 export default Contact;

@@ -1,21 +1,19 @@
-// Dependencies
 import React from 'react';  
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-
-// Components
-import App from './components/app/App.jsx';
-
-// Styles
+import App from './components/app/App.jsx'
 import './index.scss';
 
 function renderApp() {  
   ReactDOM.render(
-    <AppContainer>
+    (<AppContainer>
       <App />
-    </AppContainer>,
+    </AppContainer>),
     document.getElementById('main')
   );
+  console.log();
+  
+
 }
 
 renderApp(); // Renders App on init

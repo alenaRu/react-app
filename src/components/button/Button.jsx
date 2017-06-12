@@ -1,24 +1,28 @@
-// Dependencies
 import React from 'react';
-
-// Styles
+import PropTypes from 'prop-types';
+import * as _ from 'lodash';
 import './Button.scss';
 
-// Components
+const Button = ({ onClick, text, className }) => {
+  let clsWrapper = ' ';
 
-class Button extends React.Component {
-  constructor(props) {
-    super(props);
-    }
-    
-  render() {
-    return (
-      <button onClick={this.props.onClick}>
-        <p>
-          {this.props.text}
-        </p>
-      </button>);
+  if (!_.isUndefined(className)) {
+    clsWrapper += `${className} `;
   }
+
+  return (
+    <button onClick={onClick} className={clsWrapper}>
+      <p>
+        {text}
+      </p>
+    </button>
+  );
+}
+
+Button.propTypes = {
+  onClick: PropTypes.func,
+  text: PropTypes.string,
+  className: PropTypes.string
 }
 
 export default Button;

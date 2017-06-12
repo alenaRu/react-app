@@ -1,41 +1,42 @@
-// Dependencies
 import React from 'react';
-
-// Styles
+import PropTypes from 'prop-types';
 import './Input.scss';
 
-// Components
-//import Tab from '../tab/Tab.jsx';
-
 class Input extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleFocus = this.handleFocus.bind(this);
-        this.handleUnfocus = this.handleUnfocus.bind(this);
-        this.defaultValue = this.props.defaultValue;
+    static propTypes = {
+        defaultValue: PropTypes.string,
+        handleSearch: PropTypes.func,
+        name: PropTypes.string,
+        required: PropTypes.bool
     }
 
-    handleFocus(event) {
+    constructor(props) {
+        super(props);
+
+    }
+
+    handleFocus = (event) => {
         if (this.input.value === this.defaultValue) {
             this.input.value = '';
         }
     }
 
-    handleUnfocus(event) {
+    handleUnfocus = (event) => {
         if (this.input.value === '') {
             this.input.value = this.defaultValue;
         }
     }
 
     render() {
+        const { defaultValue, handleSearch, name, required } = this.props;
         return (
             <input type="text"
-                defaultValue={this.defaultValue}
+                defaultValue={defaultValue}
                 onFocus={this.handleFocus}
                 onBlur={this.handleUnfocus}
-                onChange={this.props.handleSearch}
-                name={this.props.name}
-                required={this.props.required}
+                onChange={handleSearch}
+                name={name}
+                required={required}
                 ref={(input) => this.input = input}
             />
         );

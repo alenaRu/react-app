@@ -34,7 +34,7 @@ export default () => ({
                                 ['es2015', { modules: false }],
                                 'react',
                             ],
-                            plugins: ['react-hot-loader/babel'],
+                            plugins: ["transform-object-rest-spread", "react-hot-loader/babel", "transform-class-properties"],
                         }
                     }
                 ]

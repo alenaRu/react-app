@@ -1,34 +1,33 @@
-// Dependencies
 import React from 'react';
-
-// Styles
+import PropTypes from 'prop-types';
+import Tab from '../tab/Tab.jsx';
 import './Header.scss';
 
-// Components
-import Tab from '../tab/Tab.jsx';
-
-
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+const Header = ({ activeTab, tabClick, tabList }) => {
   
-  render() {
-    return (
-      <header>
-        {
-          this.props.tabList.map((name, i) => {
-            return <Tab
+  return (
+    <header>
+      {
+        tabList.map((name, i) => {
+          return (
+            <Tab
               key={i}
-              tabName={name}
-              isSelected={(i === this.props.activeTab) ? true : false}
-              tabClick={this.props.tabClick}              
-            />;
-          })
-        }
-      </header>
-    );
-  }
+              name={name}
+              tabIndex={i}
+              selected={(i === activeTab)}
+              onClick={tabClick}
+            />
+          );
+        })
+      }
+    </header>
+  );
+};
+
+Header.propTypes = {
+  activeTab: PropTypes.number,
+  tabClick: PropTypes.func,
+  tabList: PropTypes.arrayOf(PropTypes.string)
 }
 
 export default Header;

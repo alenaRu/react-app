@@ -1,29 +1,25 @@
-// Dependencies
 import React from 'react';
-
-// Styles
+import PropTypes from 'prop-types';
 import './Footer.scss';
 
-// Components
-//import Tab from '../tab/Tab.jsx';
+const Footer = ({ profileName, contactListLength }) => {
 
-class Footer extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  return (
+    <footer>
+      <p>Profile:
+        <span>{profileName}</span>
+      </p>
 
-  getProfileName() {
-    return this.props.profileName ? <p>Profile: <span> {this.props.profileName} </span></p> : <p>No opened profile</p>;
-  }
+      <p>User in list:
+        <span>{contactListLength}</span>
+      </p>
+    </footer>
+  );
+}
 
-  render() {
-    return (
-      <footer>
-        {this.getProfileName()}
-        <p>User in list: <span>{this.props.contactListLength} </span></p>
-      </footer>
-    );
-  }
+Footer.propTypes = {
+  profileName: PropTypes.string,
+  contactListLength: PropTypes.number
 }
 
 export default Footer;
