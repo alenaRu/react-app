@@ -1,6 +1,5 @@
 .add-contact {
     width: 100%;
-
     form {
         display: flex;
         flex-direction: column;
@@ -8,5 +7,8 @@
         width: 70%;
         margin: 0 auto;
         font-size: 1.3vw;
+    }
+    button {
+        margin-left: 40vw;
     }
 }

@@ -13,6 +13,7 @@ export interface Props {
   goToListClick: () => void,
   goToAddClick: () => void,
   onContactClick: (contactID: number) => void,
+  addUserClick: (userData: UserProfile) => void
 }
 
 class Content extends React.Component<Props, undefined> {
@@ -25,7 +26,7 @@ class Content extends React.Component<Props, undefined> {
   }
 
   identifyContent() {
-    const { data, activeTab, profile, goToListClick, goToProfileClick, goToAddClick, onContactClick } = this.props;
+    const { data, activeTab, profile, goToListClick, goToProfileClick, goToAddClick, onContactClick, addUserClick } = this.props;
     
     switch (activeTab) {
       case 0: return (
@@ -43,9 +44,8 @@ class Content extends React.Component<Props, undefined> {
           onContactClick={onContactClick}
         />);
       case 2: {
-
         return (
-          <AddContact data={data}/>
+          <AddContact data={data} addUserClick={addUserClick}/>
         );
       }
       default: return null;

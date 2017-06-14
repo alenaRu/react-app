@@ -12,18 +12,17 @@ export interface ContactListProps {
   onContactClick: (contactID: number) => void,
 }
 
-class ContactList extends React.Component<ContactListProps, { displeyedData: UserProfile[] }> {  
+class ContactList extends React.Component<ContactListProps, { displeyedData: UserProfile[] }> {
   state: { displeyedData: UserProfile[] };
   constructor(props: ContactListProps) {
     super(props);
     this.state = { displeyedData: this.props.data };
   }
 
-  handleSearch = (event: any) => {
-    const input = event.target;
-    const searchQuery = input.value.toLowerCase();
+  handleSearch = (inputName: string, inputValue: string) => {
+    const searchQuery = inputValue.toLowerCase();
 
-    if (searchQuery !== input.defaultValue) {
+    if (searchQuery !== '') {
       const displeyedData = this.props.data.filter((item) => {
         const searchVal = (item.first_name + " " + item.last_name).toLowerCase();
         return searchVal.indexOf(searchQuery) !== -1;
@@ -33,7 +32,7 @@ class ContactList extends React.Component<ContactListProps, { displeyedData: Use
   }
 
   render() {
-    const { goToProfileClick, goToAddClick, onContactClick} = this.props;
+    const { goToProfileClick, goToAddClick, onContactClick } = this.props;
     return (
       <div className="contact-list">
 
@@ -44,7 +43,7 @@ class ContactList extends React.Component<ContactListProps, { displeyedData: Use
           />
           <Input
             defaultValue="Search certain contact..."
-            handleSearch={this.handleSearch}
+            handleInput={this.handleSearch}
             name='searchInput'
           />
           <Button
@@ -54,14 +53,8 @@ class ContactList extends React.Component<ContactListProps, { displeyedData: Use
 
         <div className="contacts">
           {
-            this.state.displeyedData.map((contact) => {
-              
-              return <Contact
-                key={contact.id}
-                contact={contact}
-                onContactClick={onContactClick}
-              />
-            })            
+            this.state.displeyedData.map((contact) =>
+              (<Contact key={contact.id} contact={contact} onContactClick={onContactClick} />)).reverse()
           }
         </div>
       </div>

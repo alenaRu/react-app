@@ -5,13 +5,13 @@ import Content from '../content/Content';
 import Footer from '../footer/Footer';
 import './App.scss';
 
+
 const DATA = require<UserProfile[]>('../../MOCK_DATA.json');
 
-//const DATA: UserProfile[] = [];
 
 export interface AppProps {
-    initTab?: number,
-    initProfile?: number
+  initTab?: number,
+  initProfile?: number
 }
 
 const _tabs = {
@@ -22,29 +22,31 @@ const _tabs = {
 
 export default class App extends React.Component<any, any> {
   tabList: string[];
-  data: UserProfile[];
+
   state: {
     tabNumber: number,
-    profileID: number
+    profileID: number,
+    data: UserProfile[]
   };
 
   constructor(props: any) {
     super(props);
 
-    this.data = DATA;
     this.tabList = ['Profile', 'Contact list', 'Add contact'];
 
     this.state = {
       tabNumber: props.initTab || -1,
-      profileID: props.initProfile || -1
+      profileID: props.initProfile || -1,
+      data: DATA.map((user) => {
+        return new UserProfile(user);
+      })
     };
   }
 
   render() {
-    const { profileID, tabNumber } = this.state;
-
-    const currProfile : UserProfile = this.data[profileID - 1];
-
+    const { profileID, tabNumber, data } = this.state;
+    const currProfile: UserProfile = data[profileID - 1];
+    
     return (
       <div className="site-wrapper">
         <Header
@@ -54,7 +56,7 @@ export default class App extends React.Component<any, any> {
         />
 
         <Content
-          data={this.data}
+          data={data}
           profile={currProfile}
           activeTab={tabNumber}
 
@@ -62,11 +64,12 @@ export default class App extends React.Component<any, any> {
           goToListClick={this.goToListClick}
           goToAddClick={this.goToAddClick}
           onContactClick={this.onContactClick}
+          addUserClick={this.addUserClick}
         />
 
         <Footer
           profileName={this._getProfileName(currProfile)}
-          contactListLength={this.data.length} />
+          contactListLength={data.length} />
         }
       </div>
     )
@@ -96,6 +99,16 @@ export default class App extends React.Component<any, any> {
     this._changeTab(_tabs.addContact);
   }
 
+  addUserClick = (userData: UserProfile) => {
+    const { data } = this.state;
+    userData.id = data.length + 1;
+    this.setState({
+      data: [...data,userData]
+    });
+    console.log(data);
+    
+  }
+
   _changeTab = (tabId = 0) => {
     this.setState({
       tabNumber: tabId
@@ -111,4 +124,5 @@ export default class App extends React.Component<any, any> {
 
     return `${profile.first_name} ${profile.last_name}`;
   };
+
 };
